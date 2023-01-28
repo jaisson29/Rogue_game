@@ -1,2 +1,2 @@
 # Rogue_game
-DUmmy game using react to practice
+Dummy game using react to practice
