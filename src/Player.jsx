@@ -12,8 +12,8 @@ class Player {
 
   draw(context){
     context.fillStyle = '#f00'
-    context.textBaseLine = 'hanging'
-    context.font = '16 Helvetica'
+    context.textBaseline = 'top'
+    context.font = '16px Helvetica'
     context.fillText( '@', this.x * this.size, this.y * this.size )
   }
 }
