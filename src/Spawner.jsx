@@ -49,6 +49,7 @@ class Spawner {
       let entity = createEntity()
       this.world.add(entity)
       this.world.moveToSpace(entity)
+      // console.log(entity)
     }
   }
 
