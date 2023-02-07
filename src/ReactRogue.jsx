@@ -1,9 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react'
 import InputManager from './InputManager.jsx'
-import Player from './Player.jsx'
+// import Player from './Player.jsx'
 import World from './World.jsx'
 import Spawner from './Spawner.jsx'
-
 
 // Correct why don't show the map
 const ReactRogue = ({ width, height, tilesize }) => {
@@ -20,15 +19,17 @@ const ReactRogue = ({ width, height, tilesize }) => {
   }
 
   useEffect(() => {
-    console.log("create map");
+    console.log('create map')
     let newWorld = new World()
     Object.assign(newWorld, world)
-    newWorld.createCellularMap();
+    newWorld.createCellularMap()
     newWorld.moveToSpace(world.player)
     let spawner = new Spawner(newWorld)
     spawner.spawnLoot(10)
+    spawner.spawnMonster(6)
+    spawner.spawnStairs()
     setWorld(newWorld)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -47,13 +48,46 @@ const ReactRogue = ({ width, height, tilesize }) => {
     ctx.clearRect(0, 0, width * tilesize, height * tilesize)
     world.draw(ctx)
   })
+
+  const listStyle = {
+    display: "flex",
+    gap: "50px",
+    justifyContent: "left",
+    boxShadow: "0px 0px 10px .5px #000",
+    padding: "15px",
+    width: "400px",
+    height: "200px"
+  }
   return (
-    <canvas
-      ref={canvasRef}
-      width={width * tilesize}
-      height={height * tilesize}
-      style={{ border: '1px solid black', background: 'DimGray'}}
-    ></canvas>
+    <>
+      <canvas
+        ref={canvasRef}
+        width={width * tilesize}
+        height={height * tilesize}
+        style={{ border: '1px solid black', background: 'DimGray' }}
+      ></canvas>
+      <section style={listStyle}>
+        <div>
+          <h3>INVENTORY</h3>
+          <ul>
+            {world.player.inventory.map((item, index) => (
+              <li key={index}>{item.attributes.name}</li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3>LOG</h3>
+          <ul>
+            {world.history.map((item, index) => (
+              <li key={index}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+      <ol>
+        <li></li>
+      </ol>
+    </>
   )
 }
 
